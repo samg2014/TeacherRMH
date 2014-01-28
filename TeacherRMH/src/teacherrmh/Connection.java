@@ -7,10 +7,7 @@ package teacherrmh;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -94,16 +91,16 @@ public class Connection {
 
         //If the command for putting hand down is recieved
         if (in.equals("DOWN")) {
-            //Find and remove the user's name if it ends with a '-'
-            txt = txt.substring(0, txt.indexOf(username + "-")) + txt.substring(txt.indexOf(username + "-") + username.length() + 3);
+            //Find and remove the user's name if it begins with 'ASSIST - '
+            txt = txt.substring(0, txt.indexOf("ASSIST - " + username)) + txt.substring(txt.indexOf("ASSIST - " + username) + username.length() + 11);
             //Update the text
             MainClass.textField.setText(txt);
         }
 
         //If the command for raising hand is recieved
         if (in.equals("UP")) {
-            //Add the user's name with a '-' at the end
-            txt = txt + username + "-\n\r";
+            //Add the user's name with the ASSIST tag at the end
+            txt = txt + "ASSIST - " + username + "\n\r";
             //Update the text
             MainClass.textField.setText(txt);
         }
@@ -121,16 +118,16 @@ public class Connection {
 
         //If the command for requesting help is recieved
         if (in.equals("GRADEME")) {
-            //Add the user's name with a '-' at the beginning
-            txt = txt + "-" + username + "\n\r";
+            //Add the user's name with the GRADE tag at the beginning
+            txt = txt + "GRADE - " + username + "\n\r";
             //Update the text
             MainClass.textField.setText(txt);
         }
 
         //If the command for retracting grading help is recieved
         if (in.equals("NOGRADE")) {
-            //Remove the user's name if it has a '-' at the beginning
-            txt = txt.substring(0, txt.indexOf("-" + username)) + txt.substring(txt.indexOf("-" + username) + username.length() + 2);
+            //Remove the user's name if it has a 'GRADE -' at the beginning
+            txt = txt.substring(0, txt.indexOf("GRADE - " + username)) + txt.substring(txt.indexOf("GRADE - " + username) + username.length() + 10);
             //Update the text
             MainClass.textField.setText(txt);
         }
