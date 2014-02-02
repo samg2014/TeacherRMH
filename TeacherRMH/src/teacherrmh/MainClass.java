@@ -9,11 +9,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 /**
@@ -61,10 +66,24 @@ public class MainClass {
         //Declare and initialize JFrame
         JFrame jframe = new JFrame();
         //Set size of jframe
-        jframe.setSize(400, 600);
-        //Add the text area to the frame
-        jframe.add(textField);
+        //400, 600
+        //Initialize JPanel
+        JPanel panel = new JPanel();
+        //Things added top to bottom
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
+        JLabel label = null;
+        BufferedImage img;
+        ImageIcon i;
+        i = new ImageIcon(new MainClass().getClass().getResource("/image.jpg"));
+        //Image image = Toolkit.getDefaultToolkit().getImage("\\src\\image.jpg");
+        label = new JLabel(i);
+        jframe.setSize(400, 600);
+        jframe.setResizable(false);
+        //Add the text area to the frame
+        panel.add(label);
+        panel.add(textField);
+        jframe.add(panel);
         //show the frame
         jframe.setVisible(true);
 
