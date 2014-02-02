@@ -92,7 +92,7 @@ public class Connection {
         //If the command for putting hand down is recieved
         if (in.equals("DOWN")) {
             //Find and remove the user's name if it begins with 'ASSIST - '
-            txt = txt.substring(0, txt.indexOf("ASSIST - " + username)) + txt.substring(txt.indexOf("ASSIST - " + username) + username.length() + 11);
+            txt = txt.substring(0, txt.indexOf("A - " + username)) + txt.substring(txt.indexOf("A - " + username) + username.length() + 6);
             //Update the text
             MainClass.textField.setText(txt);
         }
@@ -100,7 +100,7 @@ public class Connection {
         //If the command for raising hand is recieved
         if (in.equals("UP")) {
             //Add the user's name with the ASSIST tag at the end
-            txt = txt + "ASSIST - " + username + "\n\r";
+            txt = txt + "A - " + username + "\n\r";
             //Update the text
             MainClass.textField.setText(txt);
         }
@@ -119,7 +119,7 @@ public class Connection {
         //If the command for requesting help is recieved
         if (in.equals("GRADEME")) {
             //Add the user's name with the GRADE tag at the beginning
-            txt = txt + "GRADE - " + username + "\n\r";
+            txt = txt + "G - " + username + "\n\r";
             //Update the text
             MainClass.textField.setText(txt);
         }
@@ -127,7 +127,7 @@ public class Connection {
         //If the command for retracting grading help is recieved
         if (in.equals("NOGRADE")) {
             //Remove the user's name if it has a 'GRADE -' at the beginning
-            txt = txt.substring(0, txt.indexOf("GRADE - " + username)) + txt.substring(txt.indexOf("GRADE - " + username) + username.length() + 10);
+            txt = txt.substring(0, txt.indexOf("G - " + username)) + txt.substring(txt.indexOf("G - " + username) + username.length() + 6);
             //Update the text
             MainClass.textField.setText(txt);
         }
