@@ -36,7 +36,6 @@ public class Connection {
         }
         //Thread for accepting commands fromt the client
         thread = new Thread() {
-            @Override
             public void run() {
                 //while this connection is still operating
                 while (running) {
@@ -57,7 +56,6 @@ public class Connection {
         //Not currently functional
         //No comments on this for now
 //        thread2 = new Thread() {
-//            @Override
 //            public void run() {
 //                while (running) {
 //                    try {

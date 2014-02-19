@@ -56,7 +56,6 @@ public class MainClass {
         
         //Add action for when button is pressed
         lowerButton.addActionListener(new ActionListener() {
-            @Override
             //When the button is pressed, do this
             public void actionPerformed(ActionEvent e) {
                 int indexToRemove = textField.getText().indexOf("/n")+2;
@@ -69,7 +68,6 @@ public class MainClass {
         
         //For the potential of custom controls for the teacher, using key, not currently in use
         textField.addKeyListener(new KeyAdapter() {
-            @Override
             //In the event that a key is pressed
             public void keyPressed(KeyEvent event) {
                 //get the char and store it in ch
@@ -96,10 +94,7 @@ public class MainClass {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         
         JLabel label = null;
-        BufferedImage img;
-        ImageIcon i;
-        i = new ImageIcon(new MainClass().getClass().getResource("/image.jpg"));
-        //Image image = Toolkit.getDefaultToolkit().getImage("\\src\\image.jpg");
+        ImageIcon i = new ImageIcon(new MainClass().getClass().getResource("/image.jpg"));
         label = new JLabel(i);
         jframe.setSize(400, 600);
         jframe.setResizable(false);
@@ -114,7 +109,6 @@ public class MainClass {
 
         //listen to actions that happen to the window
         jframe.addWindowListener(new WindowAdapter() {
-            @Override
             //When the window is closed
             public void windowClosing(WindowEvent e) {
                 //try to close the ServerSocket, which leaves the port open
@@ -126,7 +120,6 @@ public class MainClass {
         });
         //Thread for operating the server
         Thread thread = new Thread() {
-            @Override
             public void run() {
                 //Try to initialize the server on port 42421
                 try {
