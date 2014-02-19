@@ -58,6 +58,7 @@ public class MainClass {
         lowerButton.addActionListener(new ActionListener() {
             //When the button is pressed, do this
             public void actionPerformed(ActionEvent e) {
+                // Does this by searching for new line (if any) and removes the line
                 int indexToRemove = textField.getText().indexOf("/n")+2;
                 if (indexToRemove>-1) {
                     String newText = textField.getText().substring( indexToRemove );
@@ -137,7 +138,7 @@ public class MainClass {
                     }
                     //Create a new Connection with socket
                     Connection con = new Connection(socket, numSocks);
-                    //Num socks increases
+                    //numSocks increases, keeping track of a new connection
                     numSocks++;
                 }
             }
