@@ -5,6 +5,8 @@
 package teacherrmh;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -16,6 +18,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,6 +34,8 @@ public class MainClass {
     public static JTextArea textField;
     //ch: nothing for now
     private static char ch = 'd';
+    //adds button to lower hand
+    private static JButton lowerButton;
     //numSocks: the number of connections currently accepted
     private static int numSocks;
     //ss: the ServerSocket that runs the server
@@ -42,10 +47,26 @@ public class MainClass {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //Initialize the button to lower hands
+        lowerButton = new JButton("Lower first hand!");
         //Initialize the text area
         textField = new JTextArea();
         //User can't edit the text area
         textField.setEditable(false);
+        
+        //Add action for when button is pressed
+        lowerButton.addActionListener(new ActionListener() {
+            @Override
+            //When the button is pressed, do this
+            public void actionPerformed(ActionEvent e) {
+                int indexToRemove = textField.getText().indexOf("/n")+2;
+                if (indexToRemove>-1) {
+                    String newText = textField.getText().substring( indexToRemove );
+                    textField.setText(newText);
+                }
+            }
+        });
+        
         //For the potential of custom controls for the teacher, using key, not currently in use
         textField.addKeyListener(new KeyAdapter() {
             @Override
@@ -60,6 +81,8 @@ public class MainClass {
                 }
             }
         });
+        //Set button size
+        lowerButton.setSize(400, 50);
         //Set font to be bold and 24 size, verdana
         Font font = new Font("Verdana", Font.BOLD, 24);
         textField.setFont(font);
@@ -71,7 +94,7 @@ public class MainClass {
         JPanel panel = new JPanel();
         //Things added top to bottom
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
+        
         JLabel label = null;
         BufferedImage img;
         ImageIcon i;
@@ -82,6 +105,8 @@ public class MainClass {
         jframe.setResizable(false);
         //Add the text area to the frame
         panel.add(label);
+        //Add button to panel
+        panel.add(lowerButton);
         panel.add(textField);
         jframe.add(panel);
         //show the frame
