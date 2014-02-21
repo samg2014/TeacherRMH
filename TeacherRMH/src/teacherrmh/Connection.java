@@ -7,6 +7,7 @@ package teacherrmh;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -55,34 +56,37 @@ public class Connection {
         //Thread for sending the command for putting a client's hand down
         //Not currently functional
         //No comments on this for now
-//        thread2 = new Thread() {
-//            public void run() {
-//                while (running) {
-//                    try {
-//                        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-//                        out.println(" ");
-//                    } catch (Exception ex) {
-//                        System.out.println("DISCONNECTED");
-//                    }
-//                    //System.out.println("1st check: " + MainClass.textField.getText().indexOf(username));
-//                    if (MainClass.removeFirstInLine) {
-//
-//                        if (MainClass.textField.getText().indexOf(username) == 0) {
-//                            PrintWriter out = null;
-//                            try {
-//                                out = new PrintWriter(socket.getOutputStream(), true);
-//                            } catch (IOException ex) {
-//                            }
-//                            out.println("DOWN");
-//                            MainClass.removeFirstInLine = false;
-//                        }
-//                    }
-//                }
-//            }
-//        };
-//        thread2.start();
-    }
+        thread2 = new Thread() {
+            public void run() {
+                while (running) {
+                    try {
+                        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                        //out.println(" ");
+                    } catch (Exception ex) {
+                        System.out.println("DISCONNECTED");
+                    }
+                    //System.out.println("1st check: " + MainClass.textField.getText().indexOf(username));
+                    if (MainClass.removeFirstInLine) {
 
+                        if (MainClass.textField.getText().indexOf(username) == 0) {
+                            PrintWriter out = null;
+                            try {
+                                out = new PrintWriter(socket.getOutputStream(), true);
+                            } catch (IOException ex) {
+                            }
+                            out.println("Teacher is putting your hand DOWN");
+                            MainClass.removeFirstInLine = false;
+                        }
+                    }
+                }
+            }
+        };
+        thread2.start();
+    }
+    public String getName (){
+        return username;
+    }
+    
     public void processInput(String in) {
         //Get the text that is currently in the text field
         String txt = MainClass.textField.getText();

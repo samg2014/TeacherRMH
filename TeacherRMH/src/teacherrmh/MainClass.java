@@ -13,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,10 +24,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import java.util.ArrayList;
 
 /**
  *
  * @author Sam
+ * @author Joey
+ * @author Ameen
+ * @author Peter
  */
 public class MainClass {
     //textField: the area where requests are displayed
@@ -42,6 +47,8 @@ public class MainClass {
     private static ServerSocket ss;
     //removeFirstInLine: for the potential removal of the first name in the list
     public static boolean removeFirstInLine = false;
+    //the arraylist for student connections
+    public static ArrayList <Connection> connectionList = new ArrayList <Connection> ();
 
     /**
      * @param args the command line arguments
@@ -63,6 +70,22 @@ public class MainClass {
                 if (indexToRemove>-1) {
                     String newText = textField.getText().substring( indexToRemove );
                     textField.setText(newText);
+                    /*//Declare PrintWriter for this thread
+                    PrintWriter out = null;
+                    try {
+                        //Attempt to initialize the PrintWriter for this thread
+                        out = new PrintWriter(socket.getOutputStream(), true);
+                    } catch (IOException ex) {
+                    }
+                    if (stateAssist == false) {
+                        //If there is no help request:
+                        //Send command to the server to put hand up
+                        out.println("UP");
+                        //Update the button
+                        assistButton.setText("Hand is UP");
+                        //Update the variable
+                        stateAssist = true;
+                    }*/
                 }
             }
         });
@@ -122,6 +145,7 @@ public class MainClass {
         //Thread for operating the server
         Thread thread = new Thread() {
             public void run() {
+                
                 //Try to initialize the server on port 42421
                 try {
                     ss = new ServerSocket(42421);
@@ -138,6 +162,8 @@ public class MainClass {
                     }
                     //Create a new Connection with socket
                     Connection con = new Connection(socket, numSocks);
+                    // adding the connection for student connections
+                    connectionList.add(con);
                     //numSocks increases, keeping track of a new connection
                     numSocks++;
                 }
