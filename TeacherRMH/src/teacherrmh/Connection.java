@@ -94,7 +94,10 @@ public class Connection {
         //If the command for putting hand down is recieved
         if (in.equals("DOWN")) {
             //Find and remove the user's name if it begins with 'ASSIST - '
-            txt = txt.substring(0, txt.indexOf("A - " + username)) + txt.substring(txt.indexOf("A - " + username) + username.length() + 6);
+            try {
+                txt = txt.substring(0, txt.indexOf("A - " + username)) + txt.substring(txt.indexOf("A - " + username) + username.length() + 6);
+            }
+            catch (StringIndexOutOfBoundsException e) {}
             //Update the text
             MainClass.textField.setText(txt);
         }
@@ -129,7 +132,10 @@ public class Connection {
         //If the command for retracting grading help is recieved
         if (in.equals("NOGRADE")) {
             //Remove the user's name if it has a 'GRADE -' at the beginning
-            txt = txt.substring(0, txt.indexOf("G - " + username)) + txt.substring(txt.indexOf("G - " + username) + username.length() + 6);
+            try {
+                txt = txt.substring(0, txt.indexOf("G - " + username)) + txt.substring(txt.indexOf("G - " + username) + username.length() + 6);
+            }
+            catch (StringIndexOutOfBoundsException e) {}
             //Update the text
             MainClass.textField.setText(txt);
         }

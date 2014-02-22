@@ -66,8 +66,8 @@ public class MainClass {
             //When the button is pressed, do this
             public void actionPerformed(ActionEvent e) {
                 // Does this by searching for new line (if any) and removes the line
-                int indexToRemove = textField.getText().indexOf("/n")+2;
-                if (indexToRemove>-1) {
+                int indexToRemove = textField.getText().indexOf("\n\r")+2;
+                if (indexToRemove>1) {
                     String newText = textField.getText().substring( indexToRemove );
                     textField.setText(newText);
                     /*//Declare PrintWriter for this thread
