@@ -72,6 +72,7 @@ public class Connection {
                         System.out.println("DISCONNECTED");
                     }
                     //System.out.println("1st check: " + MainClass.textField.getText().indexOf(username));
+                    System.out.println("Thread running");
                     if (MainClass.removeFirstInLine) {
                         System.out.println("Remove first");
                         if (MainClass.textField.getText().indexOf(username) == 4) {
