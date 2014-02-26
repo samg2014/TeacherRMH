@@ -160,6 +160,9 @@ public class MainClass {
                     connectionList.add(con);
                     //numSocks increases, keeping track of a new connection
                     numSocks++;
+                    
+                    
+                    
                 }
             }
         };
