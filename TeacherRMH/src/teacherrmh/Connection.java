@@ -1,18 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package teacherrmh;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- *
- * @author Sam
- */
+*
+* @author Sam
+*/
 public class Connection {
 
     //socket: the Socket that this connection is connected to
@@ -36,7 +33,6 @@ public class Connection {
         }
         //Thread for accepting commands fromt the client
         thread = new Thread() {
-            @Override
             public void run() {
                 //while this connection is still operating
                 while (running) {
@@ -56,35 +52,37 @@ public class Connection {
         //Thread for sending the command for putting a client's hand down
         //Not currently functional
         //No comments on this for now
-//        thread2 = new Thread() {
-//            @Override
-//            public void run() {
-//                while (running) {
-//                    try {
-//                        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-//                        out.println(" ");
-//                    } catch (Exception ex) {
-//                        System.out.println("DISCONNECTED");
-//                    }
-//                    //System.out.println("1st check: " + MainClass.textField.getText().indexOf(username));
-//                    if (MainClass.removeFirstInLine) {
-//
-//                        if (MainClass.textField.getText().indexOf(username) == 0) {
-//                            PrintWriter out = null;
-//                            try {
-//                                out = new PrintWriter(socket.getOutputStream(), true);
-//                            } catch (IOException ex) {
-//                            }
-//                            out.println("DOWN");
-//                            MainClass.removeFirstInLine = false;
-//                        }
-//                    }
-//                }
-//            }
-//        };
-//        thread2.start();
-    }
+        thread2 = new Thread() {
+            public void run() {
+                while (running) {
+                    try {
+                        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                        //out.println(" ");
+                    } catch (Exception ex) {
+                        System.out.println("DISCONNECTED");
+                    }
+                    //System.out.println("1st check: " + MainClass.textField.getText().indexOf(username));
+                    if (MainClass.removeFirstInLine) {
 
+                        if (MainClass.textField.getText().indexOf(username) == 0) {
+                            PrintWriter out = null;
+                            try {
+                                out = new PrintWriter(socket.getOutputStream(), true);
+                            } catch (IOException ex) {
+                            }
+                            out.println("Teacher is putting your hand DOWN");
+                            MainClass.removeFirstInLine = false;
+                        }
+                    }
+                }
+            }
+        };
+        thread2.start();
+    }
+    public String getName (){
+        return username;
+    }
+    
     public void processInput(String in) {
         //Get the text that is currently in the text field
         String txt = MainClass.textField.getText();
@@ -92,7 +90,10 @@ public class Connection {
         //If the command for putting hand down is recieved
         if (in.equals("DOWN")) {
             //Find and remove the user's name if it begins with 'ASSIST - '
-            txt = txt.substring(0, txt.indexOf("A - " + username)) + txt.substring(txt.indexOf("A - " + username) + username.length() + 6);
+            try {
+                txt = txt.substring(0, txt.indexOf("A - " + username)) + txt.substring(txt.indexOf("A - " + username) + username.length() + 6);
+            }
+            catch (StringIndexOutOfBoundsException e) {}
             //Update the text
             MainClass.textField.setText(txt);
         }
@@ -127,7 +128,10 @@ public class Connection {
         //If the command for retracting grading help is recieved
         if (in.equals("NOGRADE")) {
             //Remove the user's name if it has a 'GRADE -' at the beginning
-            txt = txt.substring(0, txt.indexOf("G - " + username)) + txt.substring(txt.indexOf("G - " + username) + username.length() + 6);
+            try {
+                txt = txt.substring(0, txt.indexOf("G - " + username)) + txt.substring(txt.indexOf("G - " + username) + username.length() + 6);
+            }
+            catch (StringIndexOutOfBoundsException e) {}
             //Update the text
             MainClass.textField.setText(txt);
         }
