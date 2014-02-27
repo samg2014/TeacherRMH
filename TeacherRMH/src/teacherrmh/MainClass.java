@@ -114,7 +114,7 @@ stateAssist = true;
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         
         JLabel label = null;
-        ImageIcon i = new ImageIcon(new MainClass().getClass().getResource("/image.jpg"));
+        ImageIcon i = new ImageIcon(new MainClass().getClass().getResource("/teacherImage.jpg"));
         label = new JLabel(i);
         jframe.setSize(400, 600);
         jframe.setResizable(false);
