@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package teacherrmh;
 
 import java.awt.Font;
@@ -27,12 +23,12 @@ import javax.swing.JTextArea;
 import java.util.ArrayList;
 
 /**
- *
- * @author Sam
- * @author Joey
- * @author Ameen
- * @author Peter
- */
+*
+* @author Sam
+* @author Joey
+* @author Ameen
+* @author Peter
+*/
 public class MainClass {
     //textField: the area where requests are displayed
 
@@ -51,8 +47,8 @@ public class MainClass {
     public static ArrayList <Connection> connectionList = new ArrayList <Connection> ();
 
     /**
-     * @param args the command line arguments
-     */
+* @param args the command line arguments
+*/
     public static void main(String[] args) {
         //Initialize the button to lower hands
         lowerButton = new JButton("Lower first hand!");
@@ -70,16 +66,22 @@ public class MainClass {
                 if (indexToRemove>1) {
                     String newText = textField.getText().substring( indexToRemove );
                     textField.setText(newText);
-                    removeFirstInLine = true;
                     /*//Declare PrintWriter for this thread
-                    PrintWriter out = null;
-                    try {
-                        //Attempt to initialize the PrintWriter for this thread
-                        out = new PrintWriter(socket.getOutputStream(), true);
-                    } catch (IOException ex) {
-                    }
-                    // Tell the student to put their hands down
-                    out.println("Teacher has put your hand down");*/
+PrintWriter out = null;
+try {
+//Attempt to initialize the PrintWriter for this thread
+out = new PrintWriter(socket.getOutputStream(), true);
+} catch (IOException ex) {
+}
+if (stateAssist == false) {
+//If there is no help request:
+//Send command to the server to put hand up
+out.println("UP");
+//Update the button
+assistButton.setText("Hand is UP");
+//Update the variable
+stateAssist = true;
+}*/
                 }
             }
         });
@@ -160,9 +162,6 @@ public class MainClass {
                     connectionList.add(con);
                     //numSocks increases, keeping track of a new connection
                     numSocks++;
-                    
-                    
-                    
                 }
             }
         };
