@@ -20,14 +20,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
 /**
  *
  * @author Sam
  */
 public class MainClass {
     //textField: the area where requests are displayed
-
     public static JTextArea textField;
     //ch: nothing for now
     private static char ch = 'd';
@@ -81,7 +79,7 @@ public class MainClass {
         jframe.setSize(400, 600);
         jframe.setResizable(false);
         //Add the text area to the frame
-        panel.add(label);
+        //panel.add(label);
         panel.add(textField);
         jframe.add(panel);
         //show the frame
@@ -127,4 +125,5 @@ public class MainClass {
         //Starts the thread
         thread.start();
     }
+
 }
