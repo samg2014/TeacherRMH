@@ -22,10 +22,16 @@ public class Connection {
     Thread thread, thread2;
     //Is this connection still operating
     private volatile boolean running = true;
+    
+    private PrintWriter out;
 
     public Connection(Socket s, int n) {
         //this socket is the one that represents the connection accepted in MainClass
         socket = s;
+        try {
+            out = new PrintWriter(s.getOutputStream(),true);
+        } catch (IOException ex) {
+        }
         //try to initialize the BufferedReader for this socket
         try {
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -33,6 +39,7 @@ public class Connection {
         }
         //Thread for accepting commands fromt the client
         thread = new Thread() {
+            @Override
             public void run() {
                 //while this connection is still operating
                 while (running) {
@@ -49,35 +56,6 @@ public class Connection {
         };
         //Start the thread
         thread.start();
-        //Thread for sending the command for putting a client's hand down
-        //Not currently functional
-        //No comments on this for now
-        thread2 = new Thread() {
-            public void run() {
-                while (running) {
-                    try {
-                        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                        //out.println(" ");
-                    } catch (Exception ex) {
-                        System.out.println("DISCONNECTED");
-                    }
-                    //System.out.println("1st check: " + MainClass.textField.getText().indexOf(username));
-                    if (MainClass.removeFirstInLine) {
-
-                        if (MainClass.textField.getText().indexOf(username) == 0) {
-                            PrintWriter out = null;
-                            try {
-                                out = new PrintWriter(socket.getOutputStream(), true);
-                            } catch (IOException ex) {
-                            }
-                            out.println("Teacher is putting your hand DOWN");
-                            MainClass.removeFirstInLine = false;
-                        }
-                    }
-                }
-            }
-        };
-        thread2.start();
     }
     public String getName (){
         return username;
@@ -141,5 +119,15 @@ public class Connection {
             //Set the variable username to the name recieved
             username = in.substring(in.indexOf(":") + 1);
         }
+        
+        if (in.contains("REMOTEDOWN"))
+        {
+            MainClass.lowerButton.doClick();
+        }
+    }
+    
+    public void send(String s)
+    {
+        out.println(s);
     }
 }

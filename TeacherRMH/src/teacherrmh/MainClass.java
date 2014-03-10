@@ -7,9 +7,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -35,7 +33,7 @@ public class MainClass {
     //ch: nothing for now
     private static char ch = 'd';
     //adds button to lower hand
-    private static JButton lowerButton;
+    public static JButton lowerButton;
     //numSocks: the number of connections currently accepted
     private static int numSocks;
     //ss: the ServerSocket that runs the server
@@ -43,7 +41,7 @@ public class MainClass {
     //removeFirstInLine: for the potential removal of the first name in the list
     public static boolean removeFirstInLine = false;
     //the arraylist for student connections
-    public static ArrayList <Connection> connectionList = new ArrayList <Connection> ();
+    public static ArrayList <Connection> connectionList = new ArrayList <> ();
 
     /**
 * @param args the command line arguments
@@ -59,9 +57,40 @@ public class MainClass {
         //Add action for when button is pressed
         lowerButton.addActionListener(new ActionListener() {
             //When the button is pressed, do this
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // Does this by searching for new line (if any) and removes the line
                 int indexToRemove = textField.getText().indexOf("\n\r")+2;
+                if(indexToRemove == 1)
+                {
+                    return;
+                }
+                String remove = textField.getText().substring(0, indexToRemove - 2);
+                boolean state;
+                if(remove.indexOf("A - ") != -1)
+                {
+                    state = true;
+                }
+                else
+                {
+                    state = false;
+                }
+                for(Connection c : connectionList)
+                {
+                    //System.out.println(remove + ":" + state + ":" + remove.substring(4));
+                    String n = c.getName();
+                    if(n.indexOf(remove.substring(4)) != -1)
+                    {
+                        if(state)
+                        {
+                            c.send("ASSISTDOWN");
+                        }
+                        else
+                        {
+                            c.send("GRADEDOWN");
+                        }
+                    }
+                }
                 if (indexToRemove>1) {
                     String newText = textField.getText().substring( indexToRemove );
                     textField.setText(newText);
@@ -88,6 +117,7 @@ stateAssist = true;
         //For the potential of custom controls for the teacher, using key, not currently in use
         textField.addKeyListener(new KeyAdapter() {
             //In the event that a key is pressed
+            @Override
             public void keyPressed(KeyEvent event) {
                 //get the char and store it in ch
                 ch = event.getKeyChar();
@@ -112,7 +142,7 @@ stateAssist = true;
         //Things added top to bottom
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         
-        JLabel label = null;
+        JLabel label;
         ImageIcon i = new ImageIcon(new MainClass().getClass().getResource("/teacherImage.jpg"));
         label = new JLabel(i);
         jframe.setSize(400, 600);
@@ -129,16 +159,19 @@ stateAssist = true;
         //listen to actions that happen to the window
         jframe.addWindowListener(new WindowAdapter() {
             //When the window is closed
+            @Override
             public void windowClosing(WindowEvent e) {
                 //try to close the ServerSocket, which leaves the port open
                 try {
                     ss.close();
                 } catch (IOException ex) {
                 }
+                System.exit(1);
             }
         });
         //Thread for operating the server
         Thread thread = new Thread() {
+            @Override
             public void run() {
                 
                 //Try to initialize the server on port 42421
