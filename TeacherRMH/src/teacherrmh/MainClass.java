@@ -66,6 +66,7 @@ public class MainClass {
                 if (indexToRemove>1) {
                     String newText = textField.getText().substring( indexToRemove );
                     textField.setText(newText);
+                    removeFirstInLine = true;
                     /*//Declare PrintWriter for this thread
 PrintWriter out = null;
 try {
@@ -73,15 +74,8 @@ try {
 out = new PrintWriter(socket.getOutputStream(), true);
 } catch (IOException ex) {
 }
-if (stateAssist == false) {
-//If there is no help request:
-//Send command to the server to put hand up
-out.println("UP");
-//Update the button
-assistButton.setText("Hand is UP");
-//Update the variable
-stateAssist = true;
-}*/
+// Tell the student to put their hands down
+out.println("Teacher has put your hand down");*/
                 }
             }
         });

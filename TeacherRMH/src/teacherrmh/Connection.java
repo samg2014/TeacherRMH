@@ -64,7 +64,7 @@ public class Connection {
                     //System.out.println("1st check: " + MainClass.textField.getText().indexOf(username));
                     if (MainClass.removeFirstInLine) {
 
-                        if (MainClass.textField.getText().indexOf(username) == 0) {
+                        if (MainClass.textField.getText().indexOf(username) == 4) {
                             PrintWriter out = null;
                             try {
                                 out = new PrintWriter(socket.getOutputStream(), true);
@@ -79,6 +79,7 @@ public class Connection {
         };
         thread2.start();
     }
+    
     public String getName (){
         return username;
     }
