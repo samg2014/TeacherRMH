@@ -84,27 +84,12 @@ public class Connection {
     }
     
     public void processInput(String in) {
+		if (in != null) {System.out.println(in);}
+		
+		String screenID = in.substring(0, in.length()-1);
+		boolean state = in.substring(in.length()-1).equals("T");
         //Get the text that is currently in the text field
         String txt = MainClass.textField.getText();
-
-        //If the command for putting hand down is recieved
-        if (in.equals("DOWN")) {
-            //Find and remove the user's name if it begins with 'ASSIST - '
-            try {
-                txt = txt.substring(0, txt.indexOf("A - " + username)) + txt.substring(txt.indexOf("A - " + username) + username.length() + 6);
-            }
-            catch (StringIndexOutOfBoundsException e) {}
-            //Update the text
-            MainClass.textField.setText(txt);
-        }
-
-        //If the command for raising hand is recieved
-        if (in.equals("UP")) {
-            //Add the user's name with the ASSIST tag at the end
-            txt = txt + "A - " + username + "\n\r";
-            //Update the text
-            MainClass.textField.setText(txt);
-        }
 
         //If the user closes their application
         if (in.equals("QUIT")) {
@@ -116,30 +101,30 @@ public class Connection {
             } catch (IOException ex) {
             }
         }
-
-        //If the command for requesting help is recieved
-        if (in.equals("GRADEME")) {
-            //Add the user's name with the GRADE tag at the beginning
-            txt = txt + "G - " + username + "\n\r";
+        
+        //If recieving the username
+		else if (in.startsWith("USERNAME:")) {
+            //Set the variable username to the name recieved
+            username = in.substring(in.indexOf(":") + 1);
+        }
+        //If the command for raising hand is recieved
+		else if (state==true) {
+            //Add the user's name with the ASSIST tag at the end
+            txt = txt + (screenID + " - " + username + "\n\r");
             //Update the text
             MainClass.textField.setText(txt);
         }
-
-        //If the command for retracting grading help is recieved
-        if (in.equals("NOGRADE")) {
-            //Remove the user's name if it has a 'GRADE -' at the beginning
+		
+        //If the command for putting hand down is recieved
+		else if (state==false) {
+            //Find and remove the user's name if it begins with 'ASSIST - '
             try {
-                txt = txt.substring(0, txt.indexOf("G - " + username)) + txt.substring(txt.indexOf("G - " + username) + username.length() + 6);
+				int ma = txt.indexOf(screenID + " - " + username);
+                txt = txt.substring(0, ma) + txt.substring(ma + username.length() + 5 + screenID.length());	// 6 comes from "# - " ... "\n\r"
             }
             catch (StringIndexOutOfBoundsException e) {}
             //Update the text
             MainClass.textField.setText(txt);
-        }
-        
-        //If recieving the username
-        if (in.contains("USERNAME:")) {
-            //Set the variable username to the name recieved
-            username = in.substring(in.indexOf(":") + 1);
         }
     }
 }
